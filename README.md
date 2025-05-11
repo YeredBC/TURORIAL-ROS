@@ -1,20 +1,37 @@
 # {Tutorial: }
 
-Breve descripción del objetivo del tutorial y lo que el lector aprenderá al completarlo.
+Este tutorial explica paso a paso cómo instalar y configurar el entorno necesario para simular y controlar el robot UR5 con un gripper Robotiq 85 en ROS. Al finalizar, el lector podrá lanzar correctamente el modelo del UR5 con su gripper en Gazebo, visualizarlo en RViz mediante MoveIt y comprobar el funcionamiento de los controladores. Todo está preparado para luego usar el sistema en tareas más complejas como pick and place o control avanzado.
 
 ---
 
 ## 📋 Requisitos Previos
 
-- Conocimientos necesarios (e.g., programación básica, matemáticas, etc.)
-- Herramientas y software requeridos (e.g., Python, ROS, Arduino IDE)
-- Dependencias o bibliotecas a instalar
+- Uso básico de terminal en Linux.
+
+- Conocimientos elementales de ROS (nodos, launch files, catkin).
+
+- Familiaridad básica con URDF y MoveIt.
+
+## 🛠️ Herramientas y software requeridos:
+- Ubuntu 20.04
+
+- ROS Noetic
+
+- Gazebo (incluido con ROS Noetic)
+
+- MoveIt
+
+- Python 3
 
 ---
 
 ## 📖  Introducción
 
-Explicación detallada del problema o tema que aborda el tutorial, su importancia y aplicaciones prácticas.
+Este tutorial tiene como objetivo documentar el proceso completo para simular y configurar el robot UR5 con un gripper Robotiq 85 en ROS1 (Noetic), utilizando herramientas como Gazebo, RViz y MoveIt. A lo largo de este instructivo, se explicará cómo preparar el entorno de trabajo, cargar los modelos del robot, la mesa y los objetos del entorno, y cómo ajustar los controladores y archivos necesarios para que todo funcione de forma integrada.
+
+El enfoque principal es lograr que el robot UR5 y su gripper funcionen correctamente dentro del simulador, con la capacidad de ser controlados desde MoveIt. Este entorno sirve como base para desarrollos más avanzados, como tareas de manipulación, pruebas de algoritmos o integración con visión artificial.
+
+
 
 ---
 
