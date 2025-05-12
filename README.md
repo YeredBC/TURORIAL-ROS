@@ -145,6 +145,7 @@ Este proyecto tiene como objetivo configurar el entorno de ROS para simular el r
 ## Paso 1: Instalar ROS
 
 ### En Ubuntu 20.04 (para ROS Noetic)
+```
 bash
 sudo apt update
 sudo apt install curl gnupg lsb-release
@@ -152,6 +153,7 @@ curl -sSL http://packages.ros.org/ros2/ubuntu/gpg.key | sudo tee /etc/apt/truste
 echo "deb [arch=amd64] http://packages.ros.org/ros/ubuntu $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/ros-latest.list
 sudo apt update
 sudo apt install ros-noetic-desktop-full
+```
 
 ### Paso 2: Inicializar ROS y configurar el entorno
 ```
