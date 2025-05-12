@@ -358,14 +358,14 @@ cd ~/catkin_ws_6
 ```
 ## Paso 9: Crear archivo de configuracion de los controladores
 -Crear dentro de la carpeta ~/catkin_ws_6/src/ur5_v1/config, crear el archivo "ur5_controllers.yaml"
-		Checar cual es el tipo de "HardwareInterface" en el archivo.xacro. 
-		En nuestro caso será "EffortController", pero esto quiere decir que necesitamos tunnear el PID. 
-		No lo haremos porque UR ya lo hizo. 
+-Checar cual es el tipo de "HardwareInterface" en el archivo.xacro. 
+En nuestro caso será "EffortController", pero esto quiere decir que necesitamos tunnear el PID. 
+No lo haremos porque UR ya lo hizo. 
 -Buscar el archivo: ~/catkin_ws_6/src/universal_robots/ur_gazebo/config/ur5_controller.yaml 
-	Copiar contenido y pegarlo en el que creamos nosotros.
-		NO HACER, QUITE NOMBRE DE ur5 -->> NO funcionará porque asignamos el nombre de ur5, 
-			por lo tanto tenemos que asignar a los grupos de controladores el nombre el namespace que pusimos, osea "ur5". 
-			Para hacerlo, unicamente añadimos un "ur5:" hasta el inicio de todo y le damos tab al resto del codigo
+Copiar contenido y pegarlo en el que creamos nosotros.
+-NO HACER, QUITE NOMBRE DE ur5 -->> NO funcionará porque asignamos el nombre de ur5, 
+por lo tanto tenemos que asignar a los grupos de controladores el nombre el namespace que pusimos, osea "ur5". 
+Para hacerlo, unicamente añadimos un "ur5:" hasta el inicio de todo y le damos tab al resto del codigo
 
 -Nota: JointTrajectoryController es porque vamos a usar el plugin de RVIZ y ese usa JointTrajectoryController
 -Nota: Usa un publish_rate alto (125 Hz), lo que puede mejorar la suavidad en simulación. Esto se ve en esta linea:
