@@ -31,210 +31,12 @@ Este tutorial tiene como objetivo documentar el proceso completo para simular y 
 
 El enfoque principal es lograr que el robot UR5 y su gripper funcionen correctamente dentro del simulador, con la capacidad de ser controlados desde MoveIt. Este entorno sirve como base para desarrollos más avanzados, como tareas de manipulación, pruebas de algoritmos o integración con visión artificial.
 
-
-
 ---
 
-## 💾 Instalación
-
-✅ PASO 0: Plugin MIMIC
-
-Se debe instalar el plugin de mimic. (Si ya lo tienes instalado no hace falta deguir estos pasos)
-Para ver si lo tienes instalado: 
-    
-    find /usr/ -name "libroboticsgroup_gazebo_mimic_joint_plugin.so"
-
-Para clonar el repositorio, instalalo dentro de tu ROS workspace: 
-
-    cd ~/catkin_ws/src
-		git clone https://github.com/roboticsgroup/roboticsgroup_gazebo_plugins.git
-		cd roboticsgroup_gazebo_plugins
-		mkdir build && cd build
-		cmake ..
-		make
-		sudo make install
-		
-Para verificar que se instalo correctamente se ejecuta:
-    
-    find /usr/ -name "libroboticsgroup_gazebo_mimic_joint_plugin.so"
-
-A continuación se detallan los pasos necesarios para instalar y preparar el entorno de trabajo del robot UR5 con gripper Robotiq 85 en ROS.
-
-✅ PASO 1: Crear el espacio de trabajo
-```
-mkdir -p ~/catkin_ws/src
-cd ~/catkin_ws
-catkin_make
-source devel/setup.bash
-echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
-```
-✅ PASO 2: Crear tu package
-```
-cd src
-catkin_create_pkg ur5_v1 controller_manager joint_state_controller robot_state_publisher roscpp rospy std_msgs urdf
-```
-
-✅ PASO 3: Clonar los paquetes necesarios
-```
-cd ~/catkin_ws/src
-```
-# Paquetes base del robot y gripper
-
-git clone https://github.com/ros-industrial/universal_robot.git
-
-git clone https://github.com/ros-industrial/robotiq.git
-
-# Paquetes del proyecto
-git clone https://github.com/YeredBC/TURORIAL-ROS.git
-
-📌 NOTA:
-Este repositorio contiene los paquetes personalizados utilizados en este proyecto,
-como ur5_v1 y ur_gripper_moveit_config. Asegúrate de que, al clonarlo,
-queden dentro de la carpeta src de tu workspace (catkin_ws/src).
-
-Para probar que aparezca el UR5, use tres terminales diferentes y ejecute los siguientes comandos:
-
-Prepara el entorno en Gazebo. Lanza el modelo del UR5 en Gazebo:
-```
-roslaunch ur_gazebo ur5_bringup.launch
-```
-
-Configura MoveIt para planificación. Lanza MoveIt con el UR5:
-```
-roslaunch ur5_moveit_config moveit_planning_execution.launch sim:=true
-```
-
-Lanza Rviz para visualizar: (En fixed frame seleccione "base_linK", en la parte inferior de rviz dar click en "add" y seleccionar "RobotModel"
-```
-roslaunch ur5_moveit_config moveit_rviz.launch config:=true
-```
-
-✅ PASO 4: Instalar dependencias del workspace
-```
-cd ~/catkin_ws
-rosdep install --from-paths src --ignore-src -r -y
-```
-
-✅ PASO 5: Compilar el workspace
-```
-catkin_make
-```
-✅ PASO 6: Configurar el entorno en el terminal
-```
-echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
-source ~/.bashrc
-```
-
-
-
-## 🛠️ Configuración del Entorno
-
-Pasos para configurar el entorno de desarrollo:
-
-## Paso 1: Instalar ROS
-
-### En Ubuntu 20.04 (para ROS Noetic)
-```
-bash
-sudo apt update
-sudo apt install curl gnupg lsb-release
-curl -sSL http://packages.ros.org/ros2/ubuntu/gpg.key | sudo tee /etc/apt/trusted.gpg.d/ros.asc
-echo "deb [arch=amd64] http://packages.ros.org/ros/ubuntu $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/ros-latest.list
-sudo apt update
-sudo apt install ros-noetic-desktop-full
-```
-
-### Paso 2: Inicializar ROS y configurar el entorno
-```
-echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc  # Para ROS Noetic
-source ~/.bashrc
-```
-### Paso 3: Instalar dependencias para Gazebo y control de robots
-```
-sudo apt install ros-noetic-gazebo-ros-pkgs ros-noetic-gazebo-ros-control
-sudo apt install ros-noetic-industrial-core ros-noetic-ur5-ros-control
-```
-### Paso 4: Instalar los paquetes del robot UR5
-```
-sudo apt install ros-noetic-ur5-moveit-config
-sudo apt install ros-noetic-ur5-gazebo
-```
-### Paso 5: Crear un workspace de ROS
-```
-mkdir -p ~/catkin_ws/src
-cd ~/catkin_ws/
-catkin_make
-source devel/setup.bash
-```
-### Paso 6: Clonar el repositorio de UR5 (opcional)
-```
-cd ~/catkin_ws/src
-git clone https://github.com/ros-industrial/ur5.git
-cd ~/catkin_ws
-catkin_make
-source devel/setup.bash
-```
-### Paso 7: Compilar el workspace
-```
-cd ~/catkin_ws
-catkin_make
-```
-### Paso 8: Configurar y lanzar Gazebo con el UR5
-```
-roslaunch ur5_gazebo ur5_world.launch
-```
-### Paso 9: Configurar MoveIt! para el control del robot
-```
-roslaunch ur5_moveit_config demo.launch
-```
-### Paso 10: Código para el "Pick and Place"
-```
-import rospy
-import moveit_commander
-from geometry_msgs.msg import Pose
-from moveit_commander.robot_trajectory import RobotTrajectory
-```
-# Inicializar el nodo ROS y MoveIt!
-```
-moveit_commander.roscpp_initialize(sys.argv)
-rospy.init_node('pick_and_place_node')
-```
-# Inicializar el brazo UR5
-```
-robot = moveit_commander.RobotCommander()
-scene = moveit_commander.PlanningSceneInterface()
-group = moveit_commander.MoveGroupCommander("manipulator")
-```
-# Mover el robot a una posición inicial
-```
-group.set_named_target("home")
-group.go(wait=True)
-```
-# Definir una nueva posición de objetivo
-```
-pose_target = Pose()
-pose_target.position.x = 0.5
-pose_target.position.y = -0.5
-pose_target.position.z = 0.5
-group.set_pose_target(pose_target)
-```
-# Planificar y ejecutar el movimiento
-```
-plan = group.plan()
-group.go(wait=True)
-```
-# Detener el robot
-```
-moveit_commander.roscpp_shutdown()
-```
-### Paso 11: Verificación y pruebas
-```
-roslaunch ur5_moveit_config demo.launch
-```
 
 ## 🏗️ Instrucciones
 
-## Paso 1: Instalar el plugin de mimic. (Si ya lo tienes instalado no hace falta deguir estos pasos)
+## ✅ Paso 1: Instalar el plugin de mimic. (Si ya lo tienes instalado no hace falta deguir estos pasos)
 -Para ver si lo tienes instalado: find /usr/ -name "libroboticsgroup_gazebo_mimic_joint_plugin.so"
 -Para clonar el repositorio, tienes 2 opciones:
 	• Instalar globalmente en el sistema (recomendado si tienes permisos sudo) o si usaras en diferentes archivos:cd ~
@@ -257,7 +59,7 @@ Para verificar que se instalo correctamente se ejecuta:
 echo 'export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:/usr/local/lib' >> ~/.bashrc
 			source ~/.bashrc
 ```
-## Paso 2: Crear tu catkin_ws_6
+## ✅ Paso 2: Crear tu catkin_ws_6
 ```
 mkdir -p ~/catkin_ws_6/src
 	cd catkin_ws_6
@@ -265,7 +67,7 @@ mkdir -p ~/catkin_ws_6/src
 	source devel/setup.bash
 	echo "source ~/catkin_ws_6/devel/setup.bash" >> ~/.bashrc
 ```
-## Paso 3: Crear tu package
+## ✅ Paso 3: Crear tu package
 ```
 cd src
 	catkin_create_pkg ur5_v1 controller_manager joint_state_controller robot_state_publisher roscpp rospy std_msgs urdf
@@ -273,7 +75,7 @@ cd src
 	cd ..
 	catkin_make
 ```
-## Paso 4: Clonar el repositorio de UR para cargar el UR5
+## ✅ Paso 4: Clonar el repositorio de UR para cargar el UR5
 ```
 udo apt-get install ros-noetic-universal-robots
 	cd src
@@ -283,7 +85,7 @@ udo apt-get install ros-noetic-universal-robots
 	rosdep install --rosdistro noetic --ignore-src --from-paths src
 	catkin_make
 ```
-## Paso 5: Probar que aparezca el UR5. Use tres terminales distintas
+## ✅ Paso 5: Probar que aparezca el UR5. Use tres terminales distintas
 -Prepara el entorno en Gazebo. Lanza el modelo del UR5 en Gazebo:
 ```
 	roslaunch ur_gazebo ur5_bringup.launch
@@ -298,26 +100,33 @@ roslaunch ur5_moveit_config moveit_rviz.launch config:=true
 			En Fixed Frame -> base_link
 			Abajo dar click en Add -> RobotModel
 ```
-## Paso 6: Crear el archivo .xacro con la configuracion del robot dentro de lac Carpeta URDF(Unified Robot Description Format)
+
+![Descripción de la imagen](media/paso2parte1.png)
+![Descripción de la imagen](media/paso2parte2.png)
+
+## ✅ Paso 6: Crear el archivo .xacro con la configuracion del robot dentro de lac Carpeta URDF(Unified Robot Description Format)
 ```
 cd ~/catkin_ws_6
 	Ejecutar: roslaunch moveit_setup_assistant setup_assistant.launch
-	
-		Dar click en -> Edit Existing MoveIt Configuration Package
+````
+Dar click en -> Edit Existing MoveIt Configuration Package
 		Poner esta ruta: /home/gazebo-ros/catkin_ws_6/src/universal_robot/ur5_moveit_config
 			Y darle a LOAD
 		Ir a la parte de "Simulation" y copiar todo el texto
 		Cerrar Movit Assistant
 	Crear carpeta "urdf" dentro de la carpeta del package creado "ur5_v1" 
 	Dentro, crear el archivo "ur5_1.xacro" y pegar ahi lo copiado
-				NO HACER -> En la linea 367, colocar el nombre de ur5 ->    <robotNamespace>/ur5</robotNamespace>
-		Cambiar los "PositionJointInterface" por "EffortJointInterface"
-```
-## Paso 7: Crear archivo launch para mostrar robot en rviz
+	Cambiar los "PositionJointInterface" por "EffortJointInterface"
+
+![Descripción de la imagen](media/paso5p1.png)
+![Descripción de la imagen](media/paso5p2.png)
+![Descripción de la imagen](media/paso5p3.png)
+
+## ✅ Paso 7: Crear archivo launch para mostrar robot en rviz
 Crear la carpeta launch dentro de . 
 	Crear dentro, el archivo "rviz_ur5.launch"
 
-En ese archivo se coloca lo siguiente, revisar que donde dice find si aparezca el nombre que tu tienes de tu carpeta y que el 	archivo xacro igual se llame igual que el que tu tienes: 
+En ese archivo se coloca lo siguiente, revisar que donde dice find si aparezca el nombre que tu tienes de tu carpeta y que el archivo xacro igual se llame igual que el que tu tienes: 
 ```
 <?xml version="1.0"?>
 <launch>
@@ -339,24 +148,29 @@ En ese archivo se coloca lo siguiente, revisar que donde dice find si aparezca e
     
 </launch>
 ```
-## Paso 8: Ejecutar rviz para guardar una config del robot. 
+## ✅ Paso 8: Ejecutar rviz para guardar una config del robot. 
 ```
 cd ~/catkin_ws_6
-	roslaunch ur5_v1 rviz_ur5.launch    
-		No aparecerá el robot, pero se arregla ajustando ciertas configuraciones:
-			Acomodar la visualización que nosotros querramos
-			Fixed Frame -> base_link
-			GlobalLinks → FixedFrame →base_link
-			Grid → Plane Cell Count → 20
-			Grid → Cell Size → 0.1
-			En Displays → Add → :
-					RobotModel
-					TF
-					MotionPlanning
+roslaunch ur5_v1 rviz_ur5.launch
+```
+No aparecerá el robot, pero se arregla ajustando ciertas configuraciones:
+	Acomodar la visualización que nosotros querramos
+		Fixed Frame -> base_link
+		GlobalLinks → FixedFrame →base_link
+		Grid → Plane Cell Count → 20
+		Grid → Cell Size → 0.1
+		En Displays → Add → :
+				RobotModel
+				TF
+				MotionPlanning
 		Crear la carpeta 'config' en ~/catkin_ws_6/src/ur5_v1. 
 		Guardar la configuracion en esa carpeta con el nombre de "config.rviz"
-```
-## Paso 9: Crear archivo de configuracion de los controladores
+
+![Descripción de la imagen](media/paso7p1.png)
+![Descripción de la imagen](media/paso7p2.png)
+![Descripción de la imagen](media/paso7p3.png)
+
+## ✅ Paso 9: Crear archivo de configuracion de los controladores
 -Crear dentro de la carpeta ~/catkin_ws_6/src/ur5_v1/config, crear el archivo "ur5_controllers.yaml"
 
 -Checar cual es el tipo de "HardwareInterface" en el archivo.xacro. 
@@ -370,12 +184,12 @@ Para hacerlo, unicamente añadimos un "ur5:" hasta el inicio de todo y le damos 
 -Nota: Usa un publish_rate alto (125 Hz), lo que puede mejorar la suavidad en simulación. Esto se ve en esta linea:
 		publish_rate: &loop_hz 125 
 		# publish rate más bajo (50 Hz) # suficiente para pruebas, pero menos suave.
-## Paso 10: Crear un archivo para guardar un entorno mínimo para Gazebo en:  
+## ✅ Paso 10: Crear un archivo para guardar un entorno mínimo para Gazebo en:  
 ```
 ur5_v1/worlds/my_custom_world.world 
 ```
 Eso te pone un piso y una mesa en la simulación.
-## Paso 11: Hacer los siguientes 2 archivos launch en una nueva carpeta en ~/catkin_ws_6/src/ur5_v1/launch
+## ✅ Paso 11: Hacer los siguientes 2 archivos launch en una nueva carpeta en ~/catkin_ws_6/src/ur5_v1/launch
 ```
 ur5_gazebo_w1_1.launch
 ```
@@ -391,9 +205,15 @@ NOTA: La simulacion en gazebo debe de estar en 'play' antes de mandar la 2da ter
 			 o verificar esta linea en el primer launch:  <arg name="paused" value="false" />	
 ```
 roslaunch ur5_v1 ur5_gazebo_w1_1.launch
+```
+![Descripción de la imagen](media/paso10p1.png)
+```
 roslaunch ur5_v1 ur5_moveit_with_rviz_1.launch
 ```
-## Paso 12: Para poder ver la orientacion en rpy en vez de quaterniones que te da rviz. Tambien para ver la posicion en rviz en pantalla
+![Descripción de la imagen](media/paso10p2.png)
+
+
+## ✅ Paso 12: Para poder ver la orientacion en rpy en vez de quaterniones que te da rviz. Tambien para ver la posicion en rviz en pantalla
 Usamos dos scripts de python y los guradmos en una nueva carpeta llamada 'scripts'
 Crear la carpeta 'scripts' en ~/catkin_ws_6/src/ur5_v1.
 Los llamamos rpy_marker_rad.py y rpy_marker_deg.py
@@ -406,7 +226,7 @@ rosrun ur5_v1 rpy_marker_deg.py
 ```
 En RViz: Add → Marker → MarkerTopic /rpy_marker_rad o /rpy_marker_deg
 Guardar el archivo: config.rviz .Nota: no crear un nuevo archivo.rviz, solo guardar el que ya teniamos
-## Paso 13: Para poder ver cuanto giran las articulaciones q1-q6 en rviz. 
+## ✅ Paso 13: Para poder ver cuanto giran las articulaciones q1-q6 en rviz. 
 Usamos el dos scripts de python en la misma carpeta 'scripts'
 	Los llamamos joint_state_marker_rad.py y joint_state_marker_deg.py
 	Les damos permisos de ejecucion manualmente o con:  chmod +x rpy_marker_rad.py
@@ -418,7 +238,7 @@ rosrun ur5_v1 joint_state_marker_deg.py
  ```
 En RViz: Add → Marker → MarkerTopic /joint_state_marker_rad o /joint_state_marker_deg	
 Guardar el archivo: config.rviz .Nota: no crear un nuevo archivo.rviz, solo guardar el que ya teniamos
-## Paso 14: Crear nuevo launch con la ejecucion de los 4 scripts pasados en el launch de moveit+Rviz
+## ✅ Paso 14: Crear nuevo launch con la ejecucion de los 4 scripts pasados en el launch de moveit+Rviz
 Crear una copia del archivo ur5_moveit_with_rviz_1.launch y llamarla ur5_moveit_with_rviz_2.launch
 Añadir el siguiente codigo en ese archivo
 ```
@@ -459,7 +279,7 @@ Añadir el siguiente codigo en ese archivo
 
 </launch>
 ```
-## Paso 15: Descargar el gripper. 
+## ✅ Paso 15: Descargar el gripper. 
 Desde este github: https://github.com/philwall3/UR5-with-Robotiq-Gripper-and-Kinect/tree/master
 Lo que se necesita principalmente, al menos para simulacion, esta en esta ruta: 
 		robotiq_85_gripper-master/robotiq_85_description	
@@ -480,7 +300,7 @@ NOTA: El joint que se mueve para cerrar la garra es:
 robotiq_85_left_knuckle_joint
 ```
 -> va de 0 a 0.804
-## Paso 16: Crear el nuevo archivo xacro para desplegar el ur5 con el gripper
+## ✅ Paso 16: Crear el nuevo archivo xacro para desplegar el ur5 con el gripper
 Crear un nuevo archivo en la carpeta /ur5_v1/urdf llamado "ur5_1_gripper.xacro"	
 	Copiar y pegar todo el contenido del archivo existente "ur5_1.xacro"
 		Añadir despues de <robot name="ur5_robot"> y el comentario grande lo siguiente, o despues de la linea 61:
@@ -509,20 +329,27 @@ En ese archivo pegar el siguiente codigo:
     </xacro:robotiq_85_gripper>
 </robot>
 ```
-## Paso 17: Crear un launch para que aparezca el gripper como el end effector en rviz
+## ✅ Paso 17: Crear un launch para que aparezca el gripper como el end effector en rviz
 Crear archivo llamado "rviz_ur5_gripper.launch"
 	Copiar y pegar el codigo de abajo 
 ```
 	cd ~/catkin_ws_6
 	catkin_make
 ```
-## Paso 18: Crear move it config package
+
+![Descripción de la imagen](media/paso14.png)
+
+## ✅ Paso 18: Crear move it config package
 En esta ruta:
 /catkin_ws_4/src, crear esta carpeta: ur_gripper_moveit_configroslaunch moveit_setup_assistant setup_assistant.launch
 Create New MoveIt ConfigurationPackage
 Escoger la ruta -> /home/gazebo-ros/catkin_ws_6/src/ur5_v1/urdf/ur5_1_gripper.xacro
 
+![Descripción de la imagen](media/paso17p2.png)
+
 Ir a Self-Collisions -> Generate Collision Matrix
+![Descripción de la imagen](media/paso17p3.png)
+
 
 Ir a planning group ->
 Add Group -> Colocar la sig Configuracion
@@ -531,6 +358,11 @@ Add Group -> Colocar la sig Configuracion
 	Group Default Planner: RRT
 	Add joints -> seleccionar de shoulder_pan_joint al wrist_3_joint (Son 6 en total)-> Save
 	Add link -> base_link, de shoulder_link a wrist_3_link, flange, tool0 (Son 9 en total)-> Save
+
+![Descripción de la imagen](media/paso17p4.png)
+![Descripción de la imagen](https://github.com/YeredBC/TURORIAL-ROS/blob/307be722d78fa25516a11c3ac39abe38815f73c8/media/paso17p5.png)
+![Descripción de la imagen](media/paso17p7.png)
+
 			
 Add Group -> Colocar la sig Configuracion
 			Group Name:	gripper
@@ -539,38 +371,50 @@ Add Group -> Colocar la sig Configuracion
 	
 Add joints -> seleccionar robotiq_85_left_knuckle_joint -> Save
 Add link -> seleccionar todos los robotiq_85_ (Son: 1 base, 4 left y 4 right) -> Save
+
+![Descripción de la imagen](media/paso17p8.png)
+![Descripción de la imagen](media/paso17p9.png)
+![Descripción de la imagen](media/paso17p11.png)
 	
 Ir a Robot Poses -> Add pose. Añadir las siguientes:
 		"zero" - Planning Group: manipulator - Todas art en 0.
 		"home" - Planning Group: manipulator - shoulder_lift_joint=-1.57rad=90°, wrist1= -1.57rad. El resto en 0
 		"open" - Planning Group: gripper - left_knuckle: 0
 		"close" - Planning Group: gripper - left_knuckle: 0.8040
+
+![Descripción de la imagen](media/paso17p16.png)
+![Descripción de la imagen](media/paso17p13.png)
+![Descripción de la imagen](media/paso17p15.png)
+
 	
 Ir a End Effectors -> Add ->
 		End Effector Name -> robotiq_gripper
 		End Effector Group -> gripper
 		Parent Link -> tool0
+
+![Descripción de la imagen](media/paso17p17.png)
+
 	
 Ir a  Passive Joints -> 
 		Añadir -> 
 			robotiq_85_left_finger_joint
 			robotiq_85_right_finger_joint
-	
+
+![Descripción de la imagen](media/paso17p18.png)
+
+ 
 Ir a controllers 
-	DEjar vacio
-	Add Controller->
-		Controller Name -> eff_joint_traj_controller
-		Controller Type -> FollowJointTrajectory	
-		Add Planning Group Joints -> manipulator
-	
-Add Controller->
-		Controller Name -> gripper_controller
-		Controller Type -> FollowJointTrajectory	
-		Advanced Options: Add Individual Joints -> robotiq_85_left_knuckle_joint
+	Dejar vacio
 		
 Ir a Author Information y llenar los campos solicitados
-	
+
+![Descripción de la imagen](media/paso17p19.png)
+
+ 
 Ir a Configuration Files -> ajustar ruta a /catkin_ws_4/src/ur_gripper_moveit_config -> Generate Packages
+
+![Descripción de la imagen](media/paso17p20.png)
+
 	
 Exit MoveIt Assistant
 	
@@ -611,7 +455,7 @@ Ahora en esta ruta /ur_gripper_moveit_config/launch, crear un  nuevo archivo lla
 ```
 Revisar que esta ocurriendo con este package por lo tanto lanzamos el demo del package:
 	roslaunch ur_gripper_moveit_config demo.launch
-## Paso 19: Realizar estos ajustes para que se vea correctamente el gripper
+## ✅ Paso 19: Realizar estos ajustes para que se vea correctamente el gripper
 ###Entrar a cada uno de estos archivos:
 /home/gazebo-ros/catkin_ws_6/src/ur_gripper_moveit_config/config/gazebo_ur5_with_gripper.urdf
 /home/gazebo-ros/catkin_ws_6/src/robotiq_gripper/urdf/robotiq_85_gripper.transmission.xacro
@@ -634,7 +478,7 @@ Lo verás líneas así: 	<joint name="robotiq_85_left_finger_joint" type="contin
 	cd ~/catkin_ws_6
 	catkin_make
  
-## Paso 20: Crear nuevo configuration.yaml con el gripper añadido
+## ✅ Paso 20: Crear nuevo configuration.yaml con el gripper añadido
 Realizar una copia de ur5_controllers.yaml
 Renombrarlo como ur5_gripper_controllers.yaml
 Añadir hasta abajo el siguiente código:
@@ -653,7 +497,7 @@ gripper_controller:
     state_publish_rate:  25
     action_monitor_rate: 10
 ```
-## Paso 21: Crear nuevo launch file para Gazebo en ur5_v1/launch
+## ✅ Paso 21: Crear nuevo launch file para Gazebo en ur5_v1/launch
 Realizar una copia de ur5_gazebo_w1_1.launch
 Renombrarlo como ur5_gripper_gazebo_w1_1.launch
 	
@@ -718,7 +562,7 @@ El codigo completo queda asi:
 
 </launch>
 ```
-## Paso 22: Crear nuevo launch file para MoveIt con Rviz ya con el gripper integrado
+## ✅ Paso 22: Crear nuevo launch file para MoveIt con Rviz ya con el gripper integrado
 Realizar una copia de ur5_moveit_with_rviz_2.launch
 Renombrarlo como ur5_gripper_moveit_with_rviz_1.launch
 	
@@ -765,7 +609,7 @@ O aqui está todo el codigo:
 
 </launch>
 ```
-## Paso 23: Crear nuevo launch donde ejecute Gazebo-moveIt-Rviz
+## ✅ Paso 23: Crear nuevo launch donde ejecute Gazebo-moveIt-Rviz
 Es basicamente juntar los dos launch pasados..
 	En la carpeta launch crear el siguiente archivo 'ur5_gripper_gazebo_moveit_rviz_w1_1.launch'
 	El código es el siguiente:
@@ -848,7 +692,10 @@ Es basicamente juntar los dos launch pasados..
 </launch>
 ```
 Al ejecutarlo darle 'Play' y despues de eso ya va a arrancar rviz
-## Paso 24: Cambiar los group de open y close de la garra para quitar los joints de los fingers que no se usan
+
+![Descripción de la imagen](media/paso22.png)
+
+## ✅ Paso 24: Cambiar los group de open y close de la garra para quitar los joints de los fingers que no se usan
 Cambiar de esto:
 ```
 <group_state name="open" group="gripper">
@@ -871,7 +718,7 @@ Poner esto:
         <joint name="robotiq_85_left_knuckle_joint" value="0.803"/>
     </group_state>	
 ```
-## Paso 25: Para cambiar la rotacion inicial del gripper en el archivo "eef.xacro"
+## ✅ Paso 25: Para cambiar la rotacion inicial del gripper en el archivo "eef.xacro"
 Solo alterar los rpy
 	En esta linea: <origin xyz = "0 0 0" rpy = "0 -1.57 0" /> <!--Posicion inicial del gripper-->
 ## Paso 26: Crear nuevo archivo python en la carpeta 'scripts' llamado "ur5_set_initial_pose.py"
@@ -922,6 +769,8 @@ if __name__ == '__main__':
     wait_for_controller()
     send_initial_pose()
 ```
+---
+## Ejecutables para realizar pruebas
 
 
 ## ✅ Conclusión
@@ -956,22 +805,26 @@ https://github.com/YeredBC/TURORIAL-ROS.git
 ## 📬 Contacto
 
 Para preguntas o sugerencias:
+- Asesor: Cesar Martinez Torres
+  - 🔗 GitHub: https://github.com/cesar-martinez-torres/UDLAP_Robotics.git
+  - 📧 Correo electrónico: cesar.martinez@udlap.mx
+
 * Nombre: Juan Pablo Rosas Pineda:
-* 🔗 GitHub: https://github.com/RosasJP17
-* 📧 Correo electrónico: juan.rosaspa@udlap.mx
+	* 🔗 GitHub: https://github.com/RosasJP17
+	* 📧 Correo electrónico: juan.rosaspa@udlap.mx
   
   
 * Nombre: Cesar Maximiliano Gutierrez Velazquez
-* 📧 Correo electrónico: cesar.gutierrezvz@udlap.mx
+	* 📧 Correo electrónico: cesar.gutierrezvz@udlap.mx
 
   
 * Nombre: Antonio De Jesus Xicali Arriaga
-* 🔗 GitHub: https://github.com/AntonioXicali101
-* 📧 Correo electrónico: antonio.xicaliaa@udlap.mx
+	* 🔗 GitHub: https://github.com/AntonioXicali101
+	* 📧 Correo electrónico: antonio.xicaliaa@udlap.mx
 
    
 * Nombre: Yered Yosshiel Bojorquez Castillo
-* 🔗 GitHub: https://github.com/YeredBC
-* 📧 Correo electrónico: yered.bojorquezco@udlap.mx
+	* 🔗 GitHub: https://github.com/YeredBC
+	* 📧 Correo electrónico: yered.bojorquezco@udlap.mx
 
 ---
