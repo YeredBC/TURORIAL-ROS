@@ -108,6 +108,11 @@ echo "deb [arch=amd64] http://packages.ros.org/ros/ubuntu $(lsb_release -cs) mai
 sudo apt update
 sudo apt install ros-noetic-desktop-full
 
+### Paso 2: Inicializar ROS y configurar el entorno
+echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc  # Para ROS Noetic
+source ~/.bashrc
+
+
 
 
 ## 🏗️ Instrucciones
