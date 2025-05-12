@@ -132,13 +132,13 @@ Repositorio de código fuente
 ## 📬 Contacto
 
 Para preguntas o sugerencias:
-Juan Pablo Rosas Pineda:
+* Nombre: Juan Pablo Rosas Pineda:
 * 📧 Correo electrónico: juan.rosaspa@udlap.mx
-Cesar Maximiliano Gutierrez Velazquez
+* Nombre:Cesar Maximiliano Gutierrez Velazquez
 * 📧 Correo electrónico: cesar.gutierrezvz@udlap.mx
-Antonio De Jesus Xicali Arriaga
+* Nombre:Antonio De Jesus Xicali Arriaga
 * 📧 Correo electrónico: antonio.xicaliaa@udlap.mx
-Yered Yosshiel Bojorquez Castillo
+* Nombre:Yered Yosshiel Bojorquez Castillo
 * 📧 Correo electrónico: yered.bojorquezco@udlap.mx
 
 ---
