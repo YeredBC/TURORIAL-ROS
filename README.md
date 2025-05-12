@@ -65,9 +65,16 @@ A continuación se detallan los pasos necesarios para instalar y preparar el ent
 mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws
 catkin_make
+source devel/setup.bash
+echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+```
+✅ PASO 2: Crear tu package
+```
+cd src
+catkin_create_pkg ur5_v1 controller_manager joint_state_controller robot_state_publisher roscpp rospy std_msgs urdf
 ```
 
-✅ PASO 2: Clonar los paquetes necesarios
+✅ PASO 3: Clonar los paquetes necesarios
 ```
 cd ~/catkin_ws/src
 ```
@@ -84,6 +91,23 @@ git clone https://github.com/YeredBC/TURORIAL-ROS.git
 Este repositorio contiene los paquetes personalizados utilizados en este proyecto,
 como ur5_v1 y ur_gripper_moveit_config. Asegúrate de que, al clonarlo,
 queden dentro de la carpeta src de tu workspace (catkin_ws/src).
+
+Para probar que aparezca el UR5, use tres terminales diferentes y ejecute los siguientes comandos:
+
+Prepara el entorno en Gazebo. Lanza el modelo del UR5 en Gazebo:
+```
+roslaunch ur_gazebo ur5_bringup.launch
+```
+
+Configura MoveIt para planificación. Lanza MoveIt con el UR5:
+```
+roslaunch ur5_moveit_config moveit_planning_execution.launch sim:=true
+```
+
+Lanza Rviz para visualizar: (En fixed frame seleccione "base_linK", en la parte inferior de rviz dar click en "add" y seleccionar "RobotModel"
+```
+roslaunch ur5_moveit_config moveit_rviz.launch config:=true
+```
 
 ✅ PASO 3: Instalar dependencias del workspace
 ```
