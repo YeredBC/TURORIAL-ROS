@@ -1,4 +1,4 @@
-# {Tutorial: Simulación del UR5 con MoveIt y Gazebo en ROS}
+# Tutorial: Simulación del UR5 con MoveIt y Gazebo en ROS
 
 Este tutorial explica paso a paso cómo instalar y configurar el entorno necesario para simular y controlar el robot UR5 con un gripper Robotiq 85 en ROS. Al finalizar, el lector podrá lanzar correctamente el modelo del UR5 con su gripper en Gazebo, visualizarlo en RViz mediante MoveIt y comprobar el funcionamiento de los controladores. Todo está preparado para luego usar el sistema en tareas más complejas como pick and place o control avanzado.
 
