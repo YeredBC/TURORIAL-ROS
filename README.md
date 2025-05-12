@@ -131,17 +131,6 @@ source ~/.bashrc
 
 Pasos para configurar el entorno de desarrollo:
 
-# Proyecto UR5 Pick and Place en Gazebo
-
-Este proyecto tiene como objetivo configurar el entorno de ROS para simular el robot UR5 en Gazebo y realizar una tarea de "Pick and Place". Se utilizan paquetes de ROS industriales y MoveIt! para el control del robot.
-
-## Requisitos
-
-- **Sistema Operativo**: Ubuntu 20.04 (para ROS Noetic).
-- **ROS**: Instalación de ROS Noetic.
-- **Gazebo**: Para simulaciones en 3D.
-- **UR5 Simulation**: Paquetes de ROS para el UR5 y MoveIt!.
-
 ## Paso 1: Instalar ROS
 
 ### En Ubuntu 20.04 (para ROS Noetic)
