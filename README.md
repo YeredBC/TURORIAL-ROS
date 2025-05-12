@@ -39,32 +39,42 @@ El enfoque principal es lograr que el robot UR5 y su gripper funcionen correctam
 
 A continuación se detallan los pasos necesarios para instalar y preparar el entorno de trabajo del robot UR5 con gripper Robotiq 85 en ROS.
 ✅ PASO 1: Crear el espacio de trabajo:
+
 mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws
 catkin_make
 
 ✅ PASO 2: Clonar los paquetes necesarios
 Desde la carpeta src, clona los siguientes repositorios:
+
 cd ~/catkin_ws/src
 
 # Paquetes base del robot y gripper
 git clone https://github.com/ros-industrial/universal_robot.git
 git clone https://github.com/ros-industrial/robotiq.git
 
-# Paquetes desarrollados en el proyecto
-git clone <TU_REPO>/ur5_v1.git
-git clone <TU_REPO>/ur_gripper_moveit_config.git
+# Paquetes del proyecto (contenidos en tu repositorio)
+git clone https://github.com/YeredBC/TURORIAL-ROS.git
+
+📌 Nota: Este repositorio contiene los paquetes personalizados como ur5_v1 y ur_gripper_moveit_config. Asegúrate de que estén correctamente ubicados dentro del src.
 
 ✅ PASO 3: Instalar dependencias del workspace:
+
 cd ~/catkin_ws
 rosdep install --from-paths src --ignore-src -r -y
 
+
 ✅ PASO 4: Compilar el workspace:
+
 catkin_make
+
+
 ✅ PASO 5: Configurar el entorno en el terminal
 Agrega tu workspace al entorno de ROS:
+
 echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 source ~/.bashrc
+
 
 
 ```
