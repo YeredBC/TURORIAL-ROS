@@ -293,6 +293,7 @@ Para preguntas o sugerencias:
 * Nombre:Antonio De Jesus Xicali Arriaga
 * 📧 Correo electrónico: antonio.xicaliaa@udlap.mx
 * Nombre:Yered Yosshiel Bojorquez Castillo
+* 🔗 GitHub: https://github.com/YeredBC
 * 📧 Correo electrónico: yered.bojorquezco@udlap.mx
 
 ---
