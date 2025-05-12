@@ -516,25 +516,21 @@ Crear archivo llamado "rviz_ur5_gripper.launch"
 	cd ~/catkin_ws_6
 	catkin_make
 ```
-NO AUN
-```
-	roslaunch ur5_v1 rviz_ur5_gripper.launch
-```
 ## Paso 18: Crear move it config package
-En esta ruta: 
-/catkin_ws_4/src, crear esta carpeta: ur_gripper_moveit_configroslaunch moveit_setup_assistant setup_assistant.launch	
-Create New MoveIt ConfigurationPackage 
+En esta ruta:
+/catkin_ws_4/src, crear esta carpeta: ur_gripper_moveit_configroslaunch moveit_setup_assistant setup_assistant.launch
+Create New MoveIt ConfigurationPackage
 Escoger la ruta -> /home/gazebo-ros/catkin_ws_6/src/ur5_v1/urdf/ur5_1_gripper.xacro
-	
+
 Ir a Self-Collisions -> Generate Collision Matrix
-	
-Ir a planning group -> 
-	Add Group -> Colocar la sig Configuracion
-		Group Name:	manipulator
-		Kinematic Solver: kdl_kinematics_plugin/KDLKinematicsPlugin
-		Group Default Planner: RRT
-		Add joints -> seleccionar de shoulder_pan_joint al wrist_3_joint (Son 6 en total)-> Save
-		Add link -> base_link, de shoulder_link a wrist_3_link, flange, tool0 (Son 9 en total)-> Save
+
+Ir a planning group ->
+Add Group -> Colocar la sig Configuracion
+	Group Name: manipulator
+	Kinematic Solver: kdl_kinematics_plugin/KDLKinematicsPlugin
+	Group Default Planner: RRT
+	Add joints -> seleccionar de shoulder_pan_joint al wrist_3_joint (Son 6 en total)-> Save
+	Add link -> base_link, de shoulder_link a wrist_3_link, flange, tool0 (Son 9 en total)-> Save
 			
 Add Group -> Colocar la sig Configuracion
 			Group Name:	gripper
