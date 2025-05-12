@@ -27,7 +27,7 @@ Este tutorial explica paso a paso cómo instalar y configurar el entorno necesar
 
 ## 📖  Introducción
 
-Este tutorial tiene como objetivo documentar el proceso completo para simular y configurar el robot UR5 con un gripper Robotiq 85 en ROS1 (Noetic), utilizando herramientas como Gazebo, RViz y MoveIt. A lo largo de este instructivo, se explicará cómo preparar el entorno de trabajo, cargar los modelos del robot, la mesa y los objetos del entorno, y cómo ajustar los controladores y archivos necesarios para que todo funcione de forma integrada.
+Este tutorial tiene como objetivo documentar el proceso completo para simular y configurar el robot UR5 con un gripper Robotiq 85 en ROS, utilizando herramientas como Gazebo, RViz y MoveIt. A lo largo de este instructivo, se explicará cómo preparar el entorno de trabajo, cargar los modelos del robot, la mesa y los objetos del entorno, y cómo ajustar los controladores y archivos necesarios para que todo funcione de forma integrada.
 
 El enfoque principal es lograr que el robot UR5 y su gripper funcionen correctamente dentro del simulador, con la capacidad de ser controlados desde MoveIt. Este entorno sirve como base para desarrollos más avanzados, como tareas de manipulación, pruebas de algoritmos o integración con visión artificial.
 
@@ -37,7 +37,7 @@ El enfoque principal es lograr que el robot UR5 y su gripper funcionen correctam
 
 ## 💾 Instalación
 
-A continuación se detallan los pasos necesarios para instalar y preparar el entorno de trabajo del robot UR5 con gripper Robotiq 85 en ROS Noetic.
+A continuación se detallan los pasos necesarios para instalar y preparar el entorno de trabajo del robot UR5 con gripper Robotiq 85 en ROS.
 
 ✅ PASO 1: Crear el espacio de trabajo
 ```
@@ -105,7 +105,16 @@ Más instrucciones y ejemplos según sea necesario.
 ---
 ## ✅ Conclusión
 
-Resumen de lo aprendido y posibles extensiones o proyectos relacionados.
+Este tutorial documenta todo el proceso necesario para simular el robot UR5 con un gripper Robotiq 85 en ROS,
+incluyendo la instalación de dependencias, la clonación de paquetes, la configuración de MoveIt y el lanzamiento
+correcto en Gazebo y RViz.
+
+Gracias a esta guía, es posible tener un entorno funcional para pruebas con el UR5 en ROS, dejando todo listo para
+futuros desarrollos como scripts de movimiento, integración con visión, o secuencias de pick and place.
+
+Además, se explicaron los archivos clave que deben modificarse, como los controladores, URDFs, y launch files, 
+lo que ayuda a entender cómo se estructura un sistema completo de simulación con ROS.
+
 
 ---
 
@@ -123,6 +132,13 @@ Repositorio de código fuente
 ## 📬 Contacto
 
 Para preguntas o sugerencias:
+Juan Pablo Rosas Pineda:
+* 📧 Correo electrónico: juan.rosaspa@udlap.mx
+Cesar Maximiliano Gutierrez Velazquez
+* 📧 Correo electrónico: cesar.gutierrezvz@udlap.mx
+Antonio De Jesus Xicali Arriaga
+* 📧 Correo electrónico: antonio.xicaliaa@udlap.mx
+Yered Yosshiel Bojorquez Castillo
+* 📧 Correo electrónico: yered.bojorquezco@udlap.mx
 
-* 📧 Correo electrónico: ejemplo@correo.com
 ---
