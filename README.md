@@ -616,27 +616,28 @@ Ahora en esta ruta /ur_gripper_moveit_config/launch, crear un  nuevo archivo lla
 Revisar que esta ocurriendo con este package por lo tanto lanzamos el demo del package:
 	roslaunch ur_gripper_moveit_config demo.launch
 ## Paso 19: Realizar estos ajustes para que se vea correctamente el gripper
-Entrar a cada uno de estos archivos:
-	/home/gazebo-ros/catkin_ws_6/src/ur_gripper_moveit_config/config/gazebo_ur5_with_gripper.urdf
-	/home/gazebo-ros/catkin_ws_6/src/robotiq_gripper/urdf/robotiq_85_gripper.transmission.xacro	
-	EL ARCHIVO "gazebo_ur5_with_gripper.urdf" ES EN REALIDAD "gazebo_ur5_robot.urdf"
-Quitar todos los: libroboticsgroup_upatras_gazebo_mimic_joint_plugin
-Reemplazar por esto: libroboticsgroup_gazebo_mimic_joint_plugin
-Entrar a cada uno de estos otros archivos
-		/home/gazebo-ros/catkin_ws_5/src/ur_gripper_moveit_config/config/gazebo_ur5_with_gripper.urdf
-		/home/gazebo-ros/catkin_ws_5/src/robotiq_gripper/urdf/robotiq_85_gripper.urdf.xacro 
+###Entrar a cada uno de estos archivos:
+/home/gazebo-ros/catkin_ws_6/src/ur_gripper_moveit_config/config/gazebo_ur5_with_gripper.urdf
+/home/gazebo-ros/catkin_ws_6/src/robotiq_gripper/urdf/robotiq_85_gripper.transmission.xacro
+EL ARCHIVO "gazebo_ur5_with_gripper.urdf" ES EN REALIDAD "gazebo_ur5_robot.urdf"
+###Quitar todos los: libroboticsgroup_upatras_gazebo_mimic_joint_plugin
+###Reemplazar por esto: libroboticsgroup_gazebo_mimic_joint_plugin
+###Entrar a cada uno de estos otros archivos
+/home/gazebo-ros/catkin_ws_5/src/ur_gripper_moveit_config/config/gazebo_ur5_with_gripper.urdf
+/home/gazebo-ros/catkin_ws_5/src/robotiq_gripper/urdf/robotiq_85_gripper.urdf.xacro 
 
-Cambiar de continous a fixed tanto para el 'robotiq_85_left_finger_joint' como para el 'robotiq_85_right_finger_joint'
-	Lo verás líneas así: 	<joint name="robotiq_85_left_finger_joint" type="continous">
-				<joint name="${prefix}robotiq_85_left_finger_joint" type="continuous">
-				<joint name="robotiq_85_right_finger_joint" type="continous">
-				<joint name="${prefix}robotiq_85_right_finger_joint" type="continuous">
-	Te quedará así: <joint name="robotiq_85_left_finger_joint" type="fixed">
-				<joint name="${prefix}robotiq_85_left_finger_joint" type="fixed">
-				<joint name="robotiq_85_right_finger_joint" type="fixed">
-				<joint name="${prefix}robotiq_85_right_finger_joint" type="fixed">
+###Cambiar de continous a fixed tanto para el 'robotiq_85_left_finger_joint' como para el 'robotiq_85_right_finger_joint'
+Lo verás líneas así: 	<joint name="robotiq_85_left_finger_joint" type="continous">
+			<joint name="${prefix}robotiq_85_left_finger_joint" type="continuous">
+			<joint name="robotiq_85_right_finger_joint" type="continous">
+			<joint name="${prefix}robotiq_85_right_finger_joint" type="continuous">
+   Te quedará así: <joint name="robotiq_85_left_finger_joint" type="fixed">
+			<joint name="${prefix}robotiq_85_left_finger_joint" type="fixed">
+			<joint name="robotiq_85_right_finger_joint" type="fixed">
+			<joint name="${prefix}robotiq_85_right_finger_joint" type="fixed">
 	cd ~/catkin_ws_6
 	catkin_make
+ 
 ## Paso 20: Crear nuevo configuration.yaml con el gripper añadido
 Realizar una copia de ur5_controllers.yaml
 Renombrarlo como ur5_gripper_controllers.yaml
