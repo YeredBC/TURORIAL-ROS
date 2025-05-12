@@ -38,7 +38,6 @@ El enfoque principal es lograr que el robot UR5 y su gripper funcionen correctam
 ## 💾 Instalación
 
 ✅ PASO 0: Crear el espacio de trabajo
-```
 
 Se debe instalar el plugin de mimic. (Si ya lo tienes instalado no hace falta deguir estos pasos)
 Para ver si lo tienes instalado: 
