@@ -109,26 +109,85 @@ sudo apt update
 sudo apt install ros-noetic-desktop-full
 
 ### Paso 2: Inicializar ROS y configurar el entorno
+
 echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc  # Para ROS Noetic
 source ~/.bashrc
 
 ### Paso 3: Instalar dependencias para Gazebo y control de robots
 
+sudo apt install ros-noetic-gazebo-ros-pkgs ros-noetic-gazebo-ros-control
+sudo apt install ros-noetic-industrial-core ros-noetic-ur5-ros-control
+
 ### Paso 4: Instalar los paquetes del robot UR5
+
+sudo apt install ros-noetic-ur5-moveit-config
+sudo apt install ros-noetic-ur5-gazebo
 
 ### Paso 5: Crear un workspace de ROS
 
+mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws/
+catkin_make
+source devel/setup.bash
+
 ### Paso 6: Clonar el repositorio de UR5 (opcional)
+
+cd ~/catkin_ws/src
+git clone https://github.com/ros-industrial/ur5.git
+cd ~/catkin_ws
+catkin_make
+source devel/setup.bash
 
 ### Paso 7: Compilar el workspace
 
+cd ~/catkin_ws
+catkin_make
+
 ### Paso 8: Configurar y lanzar Gazebo con el UR5
+
+roslaunch ur5_gazebo ur5_world.launch
 
 ### Paso 9: Configurar MoveIt! para el control del robot
 
+roslaunch ur5_moveit_config demo.launch
+
 ### Paso 10: Código para el "Pick and Place"
 
+import rospy
+import moveit_commander
+from geometry_msgs.msg import Pose
+from moveit_commander.robot_trajectory import RobotTrajectory
+
+# Inicializar el nodo ROS y MoveIt!
+moveit_commander.roscpp_initialize(sys.argv)
+rospy.init_node('pick_and_place_node')
+
+# Inicializar el brazo UR5
+robot = moveit_commander.RobotCommander()
+scene = moveit_commander.PlanningSceneInterface()
+group = moveit_commander.MoveGroupCommander("manipulator")
+
+# Mover el robot a una posición inicial
+group.set_named_target("home")
+group.go(wait=True)
+
+# Definir una nueva posición de objetivo
+pose_target = Pose()
+pose_target.position.x = 0.5
+pose_target.position.y = -0.5
+pose_target.position.z = 0.5
+group.set_pose_target(pose_target)
+
+# Planificar y ejecutar el movimiento
+plan = group.plan()
+group.go(wait=True)
+
+# Detener el robot
+moveit_commander.roscpp_shutdown()
+
 ### Paso 11: Verificación y pruebas
+
+roslaunch ur5_moveit_config demo.launch
 
 
 ## 🏗️ Instrucciones
