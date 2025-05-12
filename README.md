@@ -32,7 +32,7 @@ Este tutorial tiene como objetivo documentar el proceso completo para simular y 
 El enfoque principal es lograr que el robot UR5 y su gripper funcionen correctamente dentro del simulador, con la capacidad de ser controlados desde MoveIt. Este entorno sirve como base para desarrollos más avanzados, como tareas de manipulación, pruebas de algoritmos o integración con visión artificial.
 
 
-
+```
 ---
 
 ## 💾 Instalación
