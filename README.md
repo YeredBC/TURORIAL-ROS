@@ -112,7 +112,23 @@ sudo apt install ros-noetic-desktop-full
 echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc  # Para ROS Noetic
 source ~/.bashrc
 
+### Paso 3: Instalar dependencias para Gazebo y control de robots
 
+### Paso 4: Instalar los paquetes del robot UR5
+
+### Paso 5: Crear un workspace de ROS
+
+### Paso 6: Clonar el repositorio de UR5 (opcional)
+
+### Paso 7: Compilar el workspace
+
+### Paso 8: Configurar y lanzar Gazebo con el UR5
+
+### Paso 9: Configurar MoveIt! para el control del robot
+
+### Paso 10: Código para el "Pick and Place"
+
+### Paso 11: Verificación y pruebas
 
 
 ## 🏗️ Instrucciones
