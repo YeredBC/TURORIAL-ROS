@@ -289,14 +289,14 @@ Para preguntas o sugerencias:
 * Nombre: Juan Pablo Rosas Pineda:
 * 🔗 GitHub: https://github.com/RosasJP17
 * 📧 Correo electrónico: juan.rosaspa@udlap.mx
-  
+  * 
 * Nombre:Cesar Maximiliano Gutierrez Velazquez
 * 📧 Correo electrónico: cesar.gutierrezvz@udlap.mx
-  
+  * 
 * Nombre:Antonio De Jesus Xicali Arriaga
 * 🔗 GitHub: https://github.com/AntonioXicali101
 * 📧 Correo electrónico: antonio.xicaliaa@udlap.mx
-  
+  * 
 * Nombre:Yered Yosshiel Bojorquez Castillo
 * 🔗 GitHub: https://github.com/YeredBC
 * 📧 Correo electrónico: yered.bojorquezco@udlap.mx
