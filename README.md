@@ -247,7 +247,7 @@ git clone https://github.com/roboticsgroup/roboticsgroup_gazebo_plugins.git
     make
     sudo make install
 ```
--Para verificar que se instalo correctamente se ejecuta:
+Para verificar que se instalo correctamente se ejecuta:
 ```
     find /usr/ -name "libroboticsgroup_gazebo_mimic_joint_plugin.so"
 ```
