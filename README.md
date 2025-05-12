@@ -396,10 +396,10 @@ roslaunch ur5_v1 ur5_moveit_with_rviz_1.launch
 ## Paso 12: Para poder ver la orientacion en rpy en vez de quaterniones que te da rviz. Tambien para ver la posicion en rviz en pantalla
 Usamos dos scripts de python y los guradmos en una nueva carpeta llamada 'scripts'
 Crear la carpeta 'scripts' en ~/catkin_ws_6/src/ur5_v1.
-	Los llamamos rpy_marker_rad.py y rpy_marker_deg.py
-	Les damos permisos de ejecucion manualmente o con:  chmod +x rpy_marker_rad.py
-	Les pegamos los codigo de abajo
-	Lo ejecutamos en nuevas terminales cada uno: 
+Los llamamos rpy_marker_rad.py y rpy_marker_deg.py
+Les damos permisos de ejecucion manualmente o con:  chmod +x rpy_marker_rad.py
+Les pegamos los codigo de abajo
+Lo ejecutamos en nuevas terminales cada uno: 
  ```
 rosrun ur5_v1 rpy_marker_rad.py
 rosrun ur5_v1 rpy_marker_deg.py
