@@ -92,8 +92,8 @@ Este proyecto tiene como objetivo configurar el entorno de ROS para simular el r
 
 ## Requisitos
 
-- **Sistema Operativo**: Ubuntu 20.04 (para ROS Noetic) o Ubuntu 18.04 (para ROS Melodic).
-- **ROS**: Instalación de ROS Noetic o Melodic.
+- **Sistema Operativo**: Ubuntu 20.04 (para ROS Noetic).
+- **ROS**: Instalación de ROS Noetic.
 - **Gazebo**: Para simulaciones en 3D.
 - **UR5 Simulation**: Paquetes de ROS para el UR5 y MoveIt!.
 
