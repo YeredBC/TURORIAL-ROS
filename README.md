@@ -86,12 +86,30 @@ source ~/.bashrc
 
 Pasos para configurar el entorno de desarrollo:
 
-* Crear un directorio de trabajo.
+# Proyecto UR5 Pick and Place en Gazebo
 
-* Configurar variables de entorno.
+Este proyecto tiene como objetivo configurar el entorno de ROS para simular el robot UR5 en Gazebo y realizar una tarea de "Pick and Place". Se utilizan paquetes de ROS industriales y MoveIt! para el control del robot.
 
-* Verificar la instalación de dependencias.
----
+## Requisitos
+
+- **Sistema Operativo**: Ubuntu 20.04 (para ROS Noetic) o Ubuntu 18.04 (para ROS Melodic).
+- **ROS**: Instalación de ROS Noetic o Melodic.
+- **Gazebo**: Para simulaciones en 3D.
+- **UR5 Simulation**: Paquetes de ROS para el UR5 y MoveIt!.
+
+## Paso 1: Instalar ROS
+
+### En Ubuntu 20.04 (para ROS Noetic)
+bash
+sudo apt update
+sudo apt install curl gnupg lsb-release
+curl -sSL http://packages.ros.org/ros2/ubuntu/gpg.key | sudo tee /etc/apt/trusted.gpg.d/ros.asc
+echo "deb [arch=amd64] http://packages.ros.org/ros/ubuntu $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/ros-latest.list
+sudo apt update
+sudo apt install ros-noetic-desktop-full
+
+
+
 ## 🏗️ Instrucciones
 **Paso 1:** Descripción del primer paso
 
