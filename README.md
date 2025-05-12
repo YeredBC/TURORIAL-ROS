@@ -244,16 +244,59 @@ roslaunch ur5_moveit_config demo.launch
 ```
 
 ## 🏗️ Instrucciones
-**Paso 1:** Descripción del primer paso
 
-Instrucciones detalladas y código de ejemplo:
+## Paso 1: Instalar el plugin de mimic. (Si ya lo tienes instalado no hace falta deguir estos pasos)
+-Para ver si lo tienes instalado: find /usr/ -name "libroboticsgroup_gazebo_mimic_joint_plugin.so"
+-Para clonar el repositorio, tienes 2 opciones:
+	• Instalar globalmente en el sistema (recomendado si tienes permisos sudo) o si usaras en diferentes archivos:cd ~
+	• Instalarlo dentro de tu ROS workspace: cd ~/ros_ws/src
+```
+git clone https://github.com/roboticsgroup/roboticsgroup_gazebo_plugins.git
+    cd roboticsgroup_gazebo_plugins
+    mkdir build && cd build
+    cmake ..
+    make
+    sudo make install
+```
+-Para verificar que se instalo correctamente se ejecuta:
+```
+    find /usr/ -name "libroboticsgroup_gazebo_mimic_joint_plugin.so"
+```
+-A veces, Gazebo necesita ayuda para encontrar plugins en carpetas no estándar. 
+		Para ello ejecutamos estas lineas en la terminal:
+```
+echo 'export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH:/usr/local/lib' >> ~/.bashrc
+			source ~/.bashrc
+```
+## Paso 2: Crear tu catkin_ws_6
+```
+mkdir -p ~/catkin_ws_6/src
+	cd catkin_ws_6
+	catkin_make
+	source devel/setup.bash
+	echo "source ~/catkin_ws_6/devel/setup.bash" >> ~/.bashrc
+```
+## Paso 3: Crear tu package
+```
+cd src
+	catkin_create_pkg ur5_v1 controller_manager joint_state_controller robot_state_publisher roscpp rospy std_msgs urdf
+		 Comentario -->   	catkin_create_pkg  <name_of_package> <dependencies of package>
+	cd ..
+	catkin_make
+```
+## Paso 4: Clonar el repositorio de UR para cargar el UR5
+```
+udo apt-get install ros-noetic-universal-robots
+	cd src
+	git clone -b noetic-devel https://github.com/ros-industrial/universal_robot.git
+	cd ..
+	rosdep update
+	rosdep install --rosdistro noetic --ignore-src --from-paths src
+	catkin_make
+```
 
 
-**Paso 2:** Descripción del segundo paso
 
-Más instrucciones y ejemplos según sea necesario.
-
----
 ## ✅ Conclusión
 
 Este tutorial documenta todo el proceso necesario para simular el robot UR5 con un gripper Robotiq 85 en ROS,
