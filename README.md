@@ -37,6 +37,23 @@ El enfoque principal es lograr que el robot UR5 y su gripper funcionen correctam
 
 ## 💾 Instalación
 
+Se debe instalar el plugin de mimic. (Si ya lo tienes instalado no hace falta deguir estos pasos)
+Para ver si lo tienes instalado: 
+    find /usr/ -name "libroboticsgroup_gazebo_mimic_joint_plugin.so"
+
+Para clonar el repositorio, instalalo dentro de tu ROS workspace: 
+
+    cd ~/catkin_ws/src
+		git clone https://github.com/roboticsgroup/roboticsgroup_gazebo_plugins.git
+		cd roboticsgroup_gazebo_plugins
+		mkdir build && cd build
+		cmake ..
+		make
+		sudo make install
+		
+Para verificar que se instalo correctamente se ejecuta:
+    find /usr/ -name "libroboticsgroup_gazebo_mimic_joint_plugin.so"
+
 A continuación se detallan los pasos necesarios para instalar y preparar el entorno de trabajo del robot UR5 con gripper Robotiq 85 en ROS.
 
 ✅ PASO 1: Crear el espacio de trabajo
