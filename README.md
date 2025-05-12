@@ -234,7 +234,7 @@ roslaunch ur5_moveit_config demo.launch
 
 ## 🏗️ Instrucciones
 
-## Paso 1: Instalar el plugin de mimic. (Si ya lo tienes instalado no hace falta deguir estos pasos)
+## Paso 1: Instalar el plugin de mimic. (Si ya lo tienes instalado no hace falta seguir estos pasos)
 -Para ver si lo tienes instalado: find /usr/ -name "libroboticsgroup_gazebo_mimic_joint_plugin.so"
 -Para clonar el repositorio, tienes 2 opciones:
 	• Instalar globalmente en el sistema (recomendado si tienes permisos sudo) o si usaras en diferentes archivos:cd ~
