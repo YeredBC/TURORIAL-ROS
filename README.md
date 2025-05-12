@@ -120,12 +120,15 @@ lo que ayuda a entender cómo se estructura un sistema completo de simulación c
 
 ## 📚 Referencias y Recursos Adicionales
 
+Enlace a documentación oficial:  
+https://wiki.ros.org/noetic
 
-Enlace a documentación oficial
+Tutoriales relacionados:  
+https://ros-planning.github.io/moveit_tutorials/  
+http://wiki.ros.org/Industrial/Tutorials
 
-Tutoriales relacionados
-
-Repositorio de código fuente
+Repositorio de código fuente:  
+https://github.com/YeredBC/TURORIAL-ROS.git
 
 ---
 
