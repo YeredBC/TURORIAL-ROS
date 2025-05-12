@@ -1,0 +1,8 @@
+prefix=/home/jp/test2_ws/devel
+
+Name: my_objects
+Description: Description of my_objects
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
